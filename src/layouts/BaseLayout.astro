@@ -5,7 +5,7 @@ const DEFAULT_DESCRIPTION =
   "ITAIMS delivers cloud, AI, and enterprise solutions with exceptional performance and Core Web Vitals in mind.";
 const DEFAULT_LANG = "en";
 
-const withFallback = (value, fallback) => {
+const normalize = (value, fallback) => {
   if (typeof value === "string") {
     const trimmed = value.trim();
     if (trimmed.length > 0) {
@@ -16,10 +16,32 @@ const withFallback = (value, fallback) => {
   return fallback;
 };
 
-const props = Astro.props ?? {};
-const pageTitle = withFallback(props.title, DEFAULT_TITLE);
-const pageDescription = withFallback(props.description, DEFAULT_DESCRIPTION);
-const pageLang = withFallback(props.lang, DEFAULT_LANG);
+const { title, description, lang } = Astro.props;
+
+const pageTitle = normalize(title, DEFAULT_TITLE);
+const pageDescription = normalize(description, DEFAULT_DESCRIPTION);
+const pageLang = normalize(lang, DEFAULT_LANG);
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "ITAIMS",
+  url: "https://www.itaims.com",
+  logo: "https://www.itaims.com/assets/img/logo/logo.png",
+  sameAs: ["https://www.linkedin.com/company/itaims"],
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "ITAIMS",
+  url: "https://www.itaims.com",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: "https://www.itaims.com/search?q={search_term_string}",
+    "query-input": "required name=search_term_string",
+  },
+};
 ---
 <!DOCTYPE html>
 <html lang={pageLang} class="no-js">
@@ -42,31 +64,8 @@ const pageLang = withFallback(props.lang, DEFAULT_LANG);
     <link rel="stylesheet" href="/assets/css/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/assets/css/nice-select.css" />
     <link rel="stylesheet" href="/assets/css/main.css" />
-    <script type="application/ld+json">
-      {JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'Organization',
-        name: 'ITAIMS',
-        url: 'https://www.itaims.com',
-        logo: 'https://www.itaims.com/assets/img/logo/logo.png',
-        sameAs: [
-          'https://www.linkedin.com/company/itaims',
-        ],
-      })}
-    </script>
-    <script type="application/ld+json">
-      {JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'WebSite',
-        name: 'ITAIMS',
-        url: 'https://www.itaims.com',
-        potentialAction: {
-          '@type': 'SearchAction',
-          target: 'https://www.itaims.com/search?q={search_term_string}',
-          'query-input': 'required name=search_term_string',
-        },
-      })}
-    </script>
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)}></script>
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)}></script>
   </head>
   <body>
     <slot />
