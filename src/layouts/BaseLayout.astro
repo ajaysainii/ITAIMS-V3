@@ -5,7 +5,7 @@ const DEFAULT_DESCRIPTION =
   "ITAIMS delivers cloud, AI, and enterprise solutions with exceptional performance and Core Web Vitals in mind.";
 const DEFAULT_LANG = "en";
 
-const withFallback = (value: unknown, fallback: string) => {
+const withFallback = (value, fallback) => {
   if (typeof value === "string") {
     const trimmed = value.trim();
     if (trimmed.length > 0) {
@@ -16,20 +16,10 @@ const withFallback = (value: unknown, fallback: string) => {
   return fallback;
 };
 
-type LayoutProps = {
-  title?: string;
-  description?: string;
-  lang?: string;
-};
-
-const props = Astro.props as LayoutProps;
-
-const pageTitle = withFallback(props?.title, DEFAULT_TITLE);
-const pageDescription = withFallback(
-  props?.description,
-  DEFAULT_DESCRIPTION,
-);
-const pageLang = withFallback(props?.lang, DEFAULT_LANG);
+const props = Astro.props ?? {};
+const pageTitle = withFallback(props.title, DEFAULT_TITLE);
+const pageDescription = withFallback(props.description, DEFAULT_DESCRIPTION);
+const pageLang = withFallback(props.lang, DEFAULT_LANG);
 ---
 <!DOCTYPE html>
 <html lang={pageLang} class="no-js">
