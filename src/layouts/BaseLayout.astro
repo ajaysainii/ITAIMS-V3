@@ -1,0 +1,91 @@
+import "../styles/tailwind.css";
+
+const DEFAULT_TITLE = "ITAIMS | Technology & Digital Transformation Experts";
+const DEFAULT_DESCRIPTION =
+  "ITAIMS delivers cloud, AI, and enterprise solutions with exceptional performance and Core Web Vitals in mind.";
+const DEFAULT_LANG = "en";
+
+const withFallback = (value, fallback) => {
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    if (trimmed.length > 0) {
+      return trimmed;
+    }
+  }
+
+  return fallback;
+};
+
+const props = Astro.props ?? {};
+const pageTitle = withFallback(props.title, DEFAULT_TITLE);
+const pageDescription = withFallback(props.description, DEFAULT_DESCRIPTION);
+const pageLang = withFallback(props.lang, DEFAULT_LANG);
+---
+<!DOCTYPE html>
+<html lang={pageLang} class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={pageDescription} />
+    <meta name="author" content="ITAIMS" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#030712" />
+    <title>{pageTitle}</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="shortcut icon" href="/assets/img/logo/favs.png" />
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/all.min.css" />
+    <link rel="stylesheet" href="/assets/css/animate.css" />
+    <link rel="stylesheet" href="/assets/css/magnific-popup.css" />
+    <link rel="stylesheet" href="/assets/css/meanmenu.css" />
+    <link rel="stylesheet" href="/assets/css/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="/assets/css/nice-select.css" />
+    <link rel="stylesheet" href="/assets/css/main.css" />
+    <script type="application/ld+json">
+      {JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'ITAIMS',
+        url: 'https://www.itaims.com',
+        logo: 'https://www.itaims.com/assets/img/logo/logo.png',
+        sameAs: [
+          'https://www.linkedin.com/company/itaims',
+        ],
+      })}
+    </script>
+    <script type="application/ld+json">
+      {JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: 'ITAIMS',
+        url: 'https://www.itaims.com',
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: 'https://www.itaims.com/search?q={search_term_string}',
+          'query-input': 'required name=search_term_string',
+        },
+      })}
+    </script>
+  </head>
+  <body>
+    <slot />
+    <script src="/assets/js/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/viewport.jquery.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/jquery.nice-select.min.js"></script>
+    <script src="/assets/js/jquery.waypoints.js"></script>
+    <script src="/assets/js/jquery.counterup.min.js"></script>
+    <script src="/assets/js/swiper-bundle.min.js"></script>
+    <script src="/assets/js/jquery.meanmenu.min.js"></script>
+    <script src="/assets/js/jquery.magnific-popup.min.js"></script>
+    <script src="/assets/js/wow.min.js"></script>
+    <script src="/assets/js/gsap.min.js"></script>
+    <script src="/assets/js/lenis.min.js"></script>
+    <script src="/assets/js/scrollSmoother.js"></script>
+    <script src="/assets/js/ScrollTrigger.min.js"></script>
+    <script src="/assets/js/spilitext-gsap.js"></script>
+    <script src="/assets/js/vanilla-tilt.min.js"></script>
+    <script src="/assets/js/main.js"></script>
+  </body>
+</html>
