@@ -1,17 +1,11 @@
 ---
 import "../styles/tailwind.css";
 
-interface Props {
-  title?: string;
-  description?: string;
-  lang?: string;
-}
-
 const {
   title = "ITAIMS | Technology & Digital Transformation Experts",
   description = "ITAIMS delivers cloud, AI, and enterprise solutions with exceptional performance and Core Web Vitals in mind.",
   lang = "en",
-} = Astro.props as Props;
+} = Astro.props ?? {};
 ---
 <!DOCTYPE html>
 <html lang={lang} class="no-js">
